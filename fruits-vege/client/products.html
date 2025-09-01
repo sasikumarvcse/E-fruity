@@ -1,0 +1,253 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>🍎 FreshFruits</title>
+    <link rel="stylesheet" href="style.css">
+    <link rel="stylesheet" href="css/cart-wishlist.css">
+    <script src="https://checkout.razorpay.com/v1/checkout.js"></script>
+</head>
+<body>
+    <!-- Main Header -->
+    <header class="main-header">
+        <div class="container">
+            <h1>🍎 FreshFruits</h1>
+            <div class="nav-right">
+                <div class="cart-toggle" onclick="cartManager.toggleCart()">
+                    <span>🛒</span>
+                    <span id="cartCount">0</span>
+                </div>
+                <nav class="main-nav">
+                    <span class="user-info">
+                        <span id="userGreeting">User</span>
+                    </span>
+                    <a href="user-dashboard.html">Dashboard</a>
+                    <a href="products.html" class="active">Products</a>
+                    <a href="profile.html">Profile</a>
+                    <a href="orders.html">Orders</a>
+                    <button onclick="logout()" class="logout-btn">Logout</button>
+                </nav>
+            </div>
+        </div>
+    </header>
+
+    <div class="container">
+        <!-- Shopping Cart Sidebar -->
+        <div id="cartSidebar" class="cart-sidebar">
+            <div class="cart-header">
+                <h3>Shopping Cart</h3>
+                <span class="close-cart" onclick="cartManager.toggleCart()">&times;</span>
+            </div>
+            <div class="cart-content">
+                <div id="cartItems">
+                    <p class="empty-cart">Your cart is empty</p>
+                </div>
+                <div class="cart-summary">
+                    <div class="subtotal">
+                        <span>Subtotal:</span>
+                        <span id="cartSubtotal">₹0</span>
+                    </div>
+                    <div class="total">
+                        <span>Total:</span>
+                        <span id="cartTotal">₹0</span>
+                    </div>
+                    <button id="checkoutCartBtn" class="checkout-btn" onclick="cartManager.proceedToCheckout()">💳 Proceed to Checkout</button>
+                    <button onclick="cartManager.clearCart()" class="clear-cart-btn">Clear Cart</button>
+                </div>
+            </div>
+        </div>
+
+        <!-- Main Content -->
+        <main class="main-content">
+            <!-- Filters Section -->
+            <aside class="filters-section">
+                <h3>Show Filters</h3>
+                <div class="filters-container">
+                    <div class="filter-group">
+                        <label for="searchInput">Search</label>
+                        <input type="text" id="searchInput" placeholder="Search products...">
+                    </div>
+                    <div class="filter-group">
+                        <label for="priceRange">Price Range</label>
+                        <input type="range" id="priceRange" min="0" max="50000" value="50000">
+                        <span id="priceValue">₹50000</span>
+                    </div>
+                    <div class="filter-group">
+                        <label for="categoryFilter">Categories</label>
+                        <select id="categoryFilter">
+                            <option value="">All Categories</option>
+                            <option value="basic">🥬 Basic</option>
+                            <option value="standard">⭐ Standard</option>
+                            <option value="premium">💎 Premium</option>
+                        </select>
+                    </div>
+                    <div class="filter-actions">
+                        <button onclick="applyFilters()" class="btn-primary">Apply Filters</button>
+                        <button onclick="clearFilters()" class="btn-secondary">Clear Filters</button>
+                    </div>
+                </div>
+            </aside>
+
+            <!-- Products Section -->
+            <section class="products-section">
+                <h2>All Products</h2>
+                
+                <!-- Loading State -->
+                <div id="loadingState" class="loading-state">
+                    <div class="loading-spinner"></div>
+                    <p>Loading products...</p>
+                </div>
+
+                <!-- No Products State -->
+                <div id="noProductsState" class="no-products-state hidden">
+                    <p>No products found matching your criteria.</p>
+                </div>
+
+                <!-- Products Grid -->
+                <div id="productsGrid" class="products-grid">
+                    <!-- Products will be loaded here -->
+                </div>
+            </section>
+        </main>
+    </div>
+
+    <!-- Product Quick View Modal -->
+    <div id="productModal" class="modal" style="display: none;">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h2 id="modalProductName">Product Name</h2>
+                <span class="close" onclick="closeModal('productModal')">&times;</span>
+            </div>
+            <div class="modal-body">
+                <div class="product-modal-content">
+                    <div class="product-modal-image">
+                        <img id="modalProductImage" src="" alt="Product">
+                    </div>
+                    <div class="product-modal-details">
+                        <h3 id="modalProductTitle">Product Title</h3>
+                        <p id="modalProductDescription">Product description...</p>
+                        <div class="product-modal-price">
+                            <span id="modalProductPrice">₹0</span>
+                        </div>
+                        <div class="product-modal-actions">
+                            <button onclick="addToCartFromModal()" class="btn-primary">Add to Cart</button>
+                            <button onclick="addToWishlistFromModal()" class="btn-secondary">Add to Wishlist</button>
+                            <button onclick="buyNowFromModal()" class="btn-success">Buy Now</button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Wishlist Modal -->
+    <div id="wishlistModal" class="modal" style="display: none;">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h2>My Wishlist</h2>
+                <span class="close" onclick="cartManager.toggleWishlist()">&times;</span>
+            </div>
+            <div class="modal-body">
+                <div id="wishlistContent">
+                    <!-- Wishlist items will be loaded here -->
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Scripts -->
+    <script src="js/cart-wishlist.js"></script>
+    <script src="js/products.js"></script>
+    <script src="razorpay-checkout.js"></script>
+    
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            console.log('✅ All scripts loaded, initializing page...');
+            
+            // Initialize user greeting
+            const user = JSON.parse(localStorage.getItem('user') || '{}');
+            if (user.firstName) {
+                const userGreeting = document.getElementById('userGreeting');
+                if (userGreeting) {
+                    userGreeting.textContent = `Hi, ${user.firstName}`;
+                }
+            }
+            
+            // Initialize price range display
+            const priceRange = document.getElementById('priceRange');
+            const priceValue = document.getElementById('priceValue');
+            if (priceRange && priceValue) {
+                priceRange.addEventListener('input', function() {
+                    priceValue.textContent = `₹${this.value}`;
+                });
+            }
+
+            // Wait for cart manager to initialize
+            if (window.cartManager && window.cartManager.isInitialized) {
+                console.log('✅ Cart manager ready');
+            } else {
+                // Wait for cart manager to be ready
+                const checkCartManager = setInterval(() => {
+                    if (window.cartManager && window.cartManager.isInitialized) {
+                        clearInterval(checkCartManager);
+                        console.log('✅ Cart manager ready');
+                    }
+                }, 100);
+            }
+        });
+
+        // Global functions
+        function closeModal(modalId) {
+            const modal = document.getElementById(modalId);
+            if (modal) {
+                modal.style.display = 'none';
+            }
+        }
+        
+        function logout() {
+            localStorage.removeItem('token');
+            localStorage.removeItem('user');
+            localStorage.removeItem('cartItems');
+            window.location.href = '/login.html';
+        }
+        
+        // Modal functions
+        function addToCartFromModal() {
+            if (window.currentProduct) {
+                cartManager.addToCart(window.currentProduct._id);
+                closeModal('productModal');
+            }
+        }
+        
+        function addToWishlistFromModal() {
+            if (window.currentProduct) {
+                cartManager.addToWishlist(window.currentProduct._id);
+                closeModal('productModal');
+            }
+        }
+        
+        function buyNowFromModal() {
+            if (window.currentProduct) {
+                // Store product for checkout
+                localStorage.setItem('buyNowProduct', JSON.stringify(window.currentProduct));
+                window.location.href = 'enhanced-checkout.html?buyNow=true';
+                closeModal('productModal');
+            }
+        }
+        
+        // Filter functions
+        function applyFilters() {
+            if (typeof window.applyFilters === 'function') {
+                window.applyFilters();
+            }
+        }
+        
+        function clearFilters() {
+            if (typeof window.clearFilters === 'function') {
+                window.clearFilters();
+            }
+        }
+    </script>
+</body>
+</html>
