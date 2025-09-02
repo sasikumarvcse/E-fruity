@@ -1873,7 +1873,7 @@
     }
   </style>
 </head>
-<body class="bg-gradient-to-br from-gray-50 via-blue-50 to-purple-50 overflow-x-hidden relative">
+<body class="bg-gray-50 overflow-x-hidden relative">
   <!-- Premium Loading Screen -->
   <div id="loadingScreen" class="fixed inset-0 bg-gradient-to-br from-blue-600 via-purple-600 to-pink-600 z-50 flex items-center justify-center">
     <div class="text-center">
@@ -1899,7 +1899,7 @@
     <div class="absolute inset-0" style="background-image: radial-gradient(circle at 25% 25%, #10b981 1px, transparent 1px), radial-gradient(circle at 75% 75%, #3b82f6 1px, transparent 1px); background-size: 50px 50px;"></div>
   </div>
   <!-- Enhanced Header with Glassmorphism -->
-  <header class="glass-card sticky top-0 z-50 border-b border-white/20 backdrop-blur-md">
+  <header class="sticky top-0 z-50 bg-white border-b border-gray-200 shadow-sm">
     <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
       <div class="flex justify-between items-center h-16">
                 <!-- Arobowl Logo -->
@@ -1929,22 +1929,22 @@
           </div>
         </div>
         <!-- Hamburger for mobile -->
-        <button id="mobileMenuBtn" class="md:hidden p-2 rounded focus:outline-none focus:ring-2 focus:ring-blue-500">
-          <i class="fas fa-bars text-xl"></i>
+        <button id="mobileMenuBtn" class="md:hidden p-2 rounded focus:outline-none focus:ring-2 focus:ring-gray-900">
+          <i class="fas fa-bars text-xl text-gray-900"></i>
         </button>
         <!-- Navigation -->
-        <nav id="mainNav" class="hidden md:flex items-center space-x-8 ml-8 flex-col md:flex-row absolute md:static top-16 left-0 w-full md:w-auto bg-white/90 backdrop-blur supports-[backdrop-filter]:bg-white/60 md:bg-transparent z-40 border-b md:border-0 border-gray-200 md:shadow-none shadow-lg rounded-b-2xl">
-  <a href="user-dashboard.html" class="flex items-center text-gray-700 hover:text-blue-600 font-medium transition-colors block md:inline-block py-2 md:py-0 px-4">
-    <i class="fas fa-home mr-2 text-lg"></i> Home
+        <nav id="mainNav" class="hidden md:flex items-center space-x-8 ml-8 flex-col md:flex-row absolute md:static top-16 left-0 w-full md:w-auto bg-white md:bg-transparent z-40 border-b md:border-0 border-gray-200 md:shadow-none shadow-lg rounded-b-2xl">
+  <a href="user-dashboard.html" class="flex items-center text-gray-900 hover:text-gray-700 font-medium transition-colors block md:inline-block py-2 md:py-0 px-4">
+    <i class="fas fa-home mr-2 text-lg text-gray-900"></i> Home
   </a>
-  <a href="#categories" class="flex items-center text-gray-700 hover:text-blue-600 font-medium transition-colors block md:inline-block py-2 md:py-0 px-4">
-    <i class="fas fa-list-alt mr-2 text-lg"></i> Categories
+  <a href="#categories" class="flex items-center text-gray-900 hover:text-gray-700 font-medium transition-colors block md:inline-block py-2 md:py-0 px-4">
+    <i class="fas fa-list-alt mr-2 text-lg text-gray-900"></i> Categories
   </a>
-  <a href="products.html?deal=true" class="flex items-center text-gray-700 hover:text-blue-600 font-medium transition-colors block md:inline-block py-2 md:py-0 px-4">
-    <i class="fas fa-tag mr-2 text-lg"></i> Deals
+  <a href="products.html?deal=true" class="flex items-center text-gray-900 hover:text-gray-700 font-medium transition-colors block md:inline-block py-2 md:py-0 px-4">
+    <i class="fas fa-tag mr-2 text-lg text-gray-900"></i> Deals
   </a>
-  <a href="orders.html" class="flex items-center text-gray-700 hover:text-blue-600 font-medium transition-colors block md:inline-block py-2 md:py-0 px-4">
-    <i class="fas fa-clipboard-list mr-2 text-lg"></i> Orders
+  <a href="orders.html" class="flex items-center text-gray-900 hover:text-gray-700 font-medium transition-colors block md:inline-block py-2 md:py-0 px-4">
+    <i class="fas fa-clipboard-list mr-2 text-lg text-gray-900"></i> Orders
   </a>
         </nav>
         <!-- Search Bar -->
@@ -1953,9 +1953,9 @@
             <input type="text" 
                    id="mainSearchInput"
                    placeholder="Search for products, brands, and categories..." 
-                   class="search-enhanced w-full pl-12 pr-4 py-3 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent rounded-2xl bg-white/90 backdrop-blur supports-[backdrop-filter]:bg-white/60">
-            <i class="fas fa-search absolute left-4 top-4 text-gray-400 icon-bounce"></i>
-            <button class="btn-premium ripple absolute right-2 top-1.5 bg-gradient-to-r from-blue-500 to-purple-500 text-white px-6 py-2 rounded-full text-sm hover:from-blue-600 hover:to-purple-600 magnetic shadow-md">
+                   class="search-enhanced w-full pl-12 pr-4 py-3 focus:outline-none focus:ring-2 focus:ring-gray-900 focus:border-transparent rounded-2xl bg-white border border-gray-300">
+            <i class="fas fa-search absolute left-4 top-4 text-gray-700 icon-bounce"></i>
+            <button class="absolute right-2 top-1.5 bg-gray-900 text-white px-6 py-2 rounded-full text-sm hover:bg-black shadow-md">
               <i class="fas fa-search mr-1"></i>Search
             </button>
           </div>
@@ -1964,23 +1964,23 @@
         <!-- Right Side -->
         <div class="flex items-center space-x-4">
           <!-- Theme Toggle -->
-          <button id="themeToggle" class="p-3 text-white hover:text-yellow-200 transition-colors hover-glow ripple rounded-full bg-white/10 backdrop-blur-sm border border-white/20" onclick="toggleTheme()" title="Toggle Theme">
-            <i class="fas fa-sun text-lg icon-bounce"></i>
+          <button id="themeToggle" class="p-3 text-gray-900 hover:text-black transition-colors rounded-full border border-gray-300 bg-white" onclick="toggleTheme()" title="Toggle Theme">
+            <i class="fas fa-sun text-lg icon-bounce text-gray-900"></i>
           </button>
           
           <!-- Cart Button in Navbar -->
-          <button id="cartBtn" class="relative p-3 text-white hover:text-green-200 transition-colors hover-glow ripple rounded-full bg-white/10 backdrop-blur-sm border border-white/20">
-            <i class="fas fa-shopping-cart text-xl icon-bounce" id="navbarCartIcon"></i>
+          <button id="cartBtn" class="relative p-3 text-gray-900 hover:text-black transition-colors rounded-full border border-gray-300 bg-white">
+            <i class="fas fa-shopping-cart text-xl icon-bounce text-gray-900" id="navbarCartIcon"></i>
             <span id="navbarCartCount" class="absolute -top-1 -right-1 bg-gradient-to-r from-red-500 to-pink-500 text-white text-xs rounded-full h-6 w-6 flex items-center justify-center font-bold shadow-lg">0</span>
           </button>
           <!-- User Menu -->
           <div class="relative" id="userMenu">
-            <button id="userMenuBtn" class="user-menu-enhanced flex items-center space-x-2 text-white transition-colors p-2 rounded-lg hover-lift">
-              <div class="w-10 h-10 bg-gradient-to-r from-white/20 to-white/10 rounded-full flex items-center justify-center border border-white/30">
-                <i class="fas fa-user text-white text-sm"></i>
+            <button id="userMenuBtn" class="user-menu-enhanced flex items-center space-x-2 text-gray-900 transition-colors p-2 rounded-lg">
+              <div class="w-10 h-10 bg-white rounded-full flex items-center justify-center border border-gray-300">
+                <i class="fas fa-user text-gray-900 text-sm"></i>
               </div>
-              <span id="userName" class="hidden md:block font-semibold">User</span>
-              <i class="fas fa-chevron-down text-xs text-white/80 icon-bounce"></i>
+              <span id="userName" class="hidden md:block font-semibold text-gray-900">User</span>
+              <i class="fas fa-chevron-down text-xs text-gray-700 icon-bounce"></i>
             </button>
             
             <div id="userDropdown" class="absolute right-0 mt-2 w-48 bg-white rounded-lg shadow-lg py-1 z-50 hidden border border-gray-200">
@@ -3149,7 +3149,7 @@
           const bankOffers = product.bankOffers || [];
           
           return `
-            <div class="product-card product-card-enhanced hover-lift card-3d bg-slate-50 border border-gray-200 rounded-2xl overflow-hidden cursor-pointer group scroll-fade-in" onclick="viewProduct('${product._id}')">
+            <div class="product-card product-card-enhanced hover-lift card-3d bg-white border border-gray-200 rounded-2xl overflow-hidden cursor-pointer group scroll-fade-in" onclick="viewProduct('${product._id}')">
               <div class="flex flex-col md:flex-row">
                 <!-- Left Side - Product Image -->
                 <div class="md:w-1/3 relative">
@@ -3255,7 +3255,7 @@
             Math.round(((product.mrp - product.price) / product.mrp) * 100) : 0;
           
           return `
-            <div class="product-card product-card-enhanced hover-lift card-3d bg-slate-50 border border-gray-200 rounded-2xl overflow-hidden cursor-pointer group scroll-fade-in" onclick="viewProduct('${product._id}')">
+            <div class="product-card product-card-enhanced hover-lift card-3d bg-white border border-gray-200 rounded-2xl overflow-hidden cursor-pointer group scroll-fade-in" onclick="viewProduct('${product._id}')">
               <!-- Product Image -->
               <div class="relative">
                 <img src="${getProductImageUrl(product)}" 
@@ -4737,7 +4737,7 @@
           wishlistContent.innerHTML = wishlist.map(product => {
             console.log('Rendering product:', product.name, product._id);
             return `
-              <div class="product-card bg-slate-50 rounded-2xl overflow-hidden shadow-lg hover:shadow-xl transition-all duration-300 group border border-gray-100">
+              <div class="product-card bg-white rounded-2xl overflow-hidden shadow-lg hover:shadow-xl transition-all duration-300 group border border-gray-100">
                 <div class="relative">
                   <img src="${getProductImageUrl(product)}" 
                        alt="${product.name}" 
