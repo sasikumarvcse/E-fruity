@@ -349,6 +349,8 @@
             const productName = urlParams.get('productName');
             const productPrice = urlParams.get('productPrice');
             const productImage = urlParams.get('productImage');
+            const isBuyNow = urlParams.get('buyNow') === 'true';
+            const isCartCheckout = urlParams.get('type') === 'cart' || !!localStorage.getItem('checkoutCart');
             
             if (productId && productName && productPrice) {
                 checkoutData.product = {
@@ -358,7 +360,53 @@
                     image: productImage || '/uploads/default-item.jpg'
                 };
                 loadAddresses();
-            } else {
+            } else if (isBuyNow) {
+                // Handle buy now flow using localStorage
+                try {
+                    const stored = localStorage.getItem('buyNowProduct');
+                    if (stored) {
+                        const prod = JSON.parse(stored);
+                        checkoutData.product = {
+                            _id: prod._id || prod.id,
+                            name: prod.name,
+                            price: parseFloat(prod.price) || 0,
+                            image: prod.image || prod.images?.[0] || '/uploads/default-item.jpg'
+                        };
+                        loadAddresses();
+                        return;
+                    }
+                } catch (e) {
+                    console.warn('Failed to parse buyNowProduct:', e);
+                }
+                showNotification('No product selected for checkout', 'error');
+                setTimeout(() => window.location.href = 'user-dashboard.html', 2000);
+            } else if (isCartCheckout) {
+                // Gracefully handle cart checkout by collapsing cart into a single payable entity
+                try {
+                    const localCart = localStorage.getItem('checkoutCart');
+                    if (localCart) {
+                        const items = JSON.parse(localCart);
+                        const total = items.reduce((sum, it) => sum + ((it.price || 0) * (it.quantity || 1)), 0);
+                        checkoutData.product = {
+                            _id: 'cart',
+                            name: `Cart Items (${items.length})`,
+                            price: parseFloat(total) || 0,
+                            image: '/uploads/default-item.jpg'
+                        };
+                        // In cart mode, quantity is fixed to 1 (represents the whole cart)
+                        checkoutData.quantity = 1;
+                        // Hide quantity controls to avoid confusion
+                        const qtyStep = document.getElementById('quantityStep');
+                        if (qtyStep) {
+                            qtyStep.querySelector('.flex.items-center.space-x-3').style.display = 'none';
+                            qtyStep.querySelector('#productPrice').textContent = `Total`; 
+                        }
+                        loadAddresses();
+                        return;
+                    }
+                } catch (e) {
+                    console.warn('Failed to handle cart checkout:', e);
+                }
                 showNotification('No product selected for checkout', 'error');
                 setTimeout(() => window.location.href = 'user-dashboard.html', 2000);
             }
