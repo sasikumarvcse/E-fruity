@@ -404,6 +404,29 @@
                         loadAddresses();
                         return;
                     }
+                    // Fallback: fetch from API if localStorage missing
+                    const token = localStorage.getItem('token');
+                    const apiRes = await fetch('/api/cart', { headers: { 'Authorization': `Bearer ${token}` } });
+                    if (apiRes.ok) {
+                        const items = await apiRes.json();
+                        if (Array.isArray(items) && items.length) {
+                            const total = items.reduce((sum, it) => sum + ((it.price || 0) * (it.quantity || 1)), 0);
+                            checkoutData.product = {
+                                _id: 'cart',
+                                name: `Cart Items (${items.length})`,
+                                price: parseFloat(total) || 0,
+                                image: '/uploads/default-item.jpg'
+                            };
+                            checkoutData.quantity = 1;
+                            const qtyStep = document.getElementById('quantityStep');
+                            if (qtyStep) {
+                                qtyStep.querySelector('.flex.items-center.space-x-3').style.display = 'none';
+                                qtyStep.querySelector('#productPrice').textContent = `Total`;
+                            }
+                            loadAddresses();
+                            return;
+                        }
+                    }
                 } catch (e) {
                     console.warn('Failed to handle cart checkout:', e);
                 }
