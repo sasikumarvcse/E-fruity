@@ -4,8 +4,10 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>🍎 My Wishlist - FreshFruits</title>
-  <link href="https://cdn.tailwindcss.com" rel="stylesheet">
+  <script src="https://cdn.tailwindcss.com"></script>
   <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css" rel="stylesheet">
+  <!-- Ensure shared cart/wishlist stylesheet is loaded for consistent styling -->
+  <link rel="stylesheet" href="/client/css/cart-wishlist.css">
   <style>
     .wishlist-card {
       transition: all 0.3s ease;
@@ -45,7 +47,7 @@
 </head>
 <body class="bg-gradient-to-br from-green-50 to-blue-50 min-h-screen">
   <!-- Header -->
-  <header class="bg-white shadow-sm border-b border-gray-200">
+  <header class="bg-white/90 backdrop-blur border-b border-gray-200 sticky top-0 z-40">
     <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
       <div class="flex justify-between items-center h-16">
         <div class="flex items-center space-x-4">
@@ -55,13 +57,13 @@
           <h1 class="text-2xl font-bold text-gray-900">FreshFruits</h1>
         </div>
         <nav class="flex items-center space-x-6">
-          <a href="index.html" class="text-gray-600 hover:text-green-600 transition-colors">
+          <a href="index.html" class="text-gray-700 hover:text-green-600 transition-colors">
             <i class="fas fa-home mr-2"></i>Home
           </a>
-          <a href="products.html" class="text-gray-600 hover:text-green-600 transition-colors">
+          <a href="products.html" class="text-gray-700 hover:text-green-600 transition-colors">
             <i class="fas fa-shopping-bag mr-2"></i>Products
           </a>
-          <a href="user-dashboard.html" class="text-gray-600 hover:text-green-600 transition-colors">
+          <a href="user-dashboard.html" class="text-gray-700 hover:text-green-600 transition-colors">
             <i class="fas fa-user mr-2"></i>Dashboard
           </a>
         </nav>
